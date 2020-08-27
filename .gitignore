@@ -1,0 +1,7 @@
+__pycache__
+*.pth
+*.idea
+*.txt*
+*.csv
+*.ipynb
+*.sh
