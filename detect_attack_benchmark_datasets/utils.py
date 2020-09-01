@@ -1,5 +1,5 @@
 import sys
-sys.path.append('/home/fabiovalerio/lavoro/adversarial_face_recognition/paper-revision')
+sys.path.append('../')
 
 import os
 import numpy as np

@@ -15,7 +15,7 @@ import torch.nn as nn
 import torch.nn.functional as F
 from torch.utils.data import DataLoader
 
-from detect_attack_toy_datasets.utils import *
+from utils import *
 from adversarials_detector.detector import Detector
 from adversarials_detector.embedder import precompute_embeddings
 
