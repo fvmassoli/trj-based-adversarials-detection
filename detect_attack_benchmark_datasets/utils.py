@@ -86,7 +86,6 @@ def get_data_splits(root, split=None):
             return pd.read_csv(o_train), pd.read_csv(o_val), pd.read_csv(o_test)
         else:
             return pd.read_csv(split_d[split])
-
     ## Concat all frames and shuffle them
     frames = [pd.read_csv(os.path.join(root, f)).sample(frac=1).reset_index(drop=True) for f in os.listdir(root) if '.csv' in f]
     res_ = pd.concat(frames)
