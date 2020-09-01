@@ -14,7 +14,7 @@
 1. Features extraction and class representatives evaluation
 
         python exctract_features_eval_class_representatives.py -ex -ma small
-        python exctract_features_eval_class_representatives.py -ev -cr m -ma small
+        python exctract_features_eval_class_representatives.py -ex -ma wide
 
 2. Generate adversarial instances
 (example of PGD attack)
