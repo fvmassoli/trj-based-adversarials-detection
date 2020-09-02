@@ -18,7 +18,7 @@ from torch.utils.data import DataLoader
 from torch.optim.lr_scheduler import ReduceLROnPlateau
 from torch.utils.data.sampler import WeightedRandomSampler
 
-from detect_attack_toy_datasets.utils import *
+from utils import *
 from adversarials_detector.detector import Detector
 from adversarials_detector.embedder import precompute_embeddings
 
@@ -103,6 +103,18 @@ def evaluate(loader, attacks, detector, device, test=False):
             if attack == 'natural': continue
             pred = np.concatenate((group.pred.values, auths.pred.values))
             target = np.concatenate((group.target.values, auths.target.values))
+            
+            # fpr_, _, thr_ = metrics.roc_curve(target, pred)
+            # print(f"attack: {attack}")
+            # for fpr_thr in [0.01, 0.03, 0.05, 0.1]:
+            #     thr__ = thr_[np.nanargmin(np.absolute(fpr_ - fpr_thr))]
+            #     pred_ = pred[target == 1]
+            #     pred_[pred_ >= thr__] = 1
+            #     pred_[pred_ < thr__] = 0
+            #     adv_acc = pred_.sum() / pred[target == 1].shape[0]
+            #     print(f"fpr_thr: {fpr_thr} - adv_acc: {adv_acc*100:.2f}%")
+            # print()
+        
             aucs[attack] = metrics.roc_auc_score(target, pred)
             print('{}: {:4.3%}'.format(attack, aucs[attack]))
             
