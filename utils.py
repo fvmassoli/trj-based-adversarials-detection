@@ -14,6 +14,28 @@ from torchvision import transforms as t
 from torchvision.datasets.folder import IMG_EXTENSIONS
 
 
+class TinyDataset(Dataset):
+    def __init__(self, root, transform=None):
+        self._root = root
+        self._transform = transform
+        self._loader = self._get_loader
+        self._imgs = os.listdir(root)
+
+    @staticmethod
+    def _get_loader(path):
+        return Image.fromarray(cv2.imread(path))
+
+    def __getitem__(self, item):
+        path = os.path.join(self._root, self._imgs[item])
+        img = self._loader(path)
+        if self._transform is not None:
+            img = self._transform(img)
+        return img
+
+    def __len__(self):
+        return len(self._imgs)
+
+
 class CustomDataset(Dataset):
     def __init__(self, root, transform=None, return_paths=False):
         self._root = root
@@ -114,3 +136,14 @@ def get_adv_transforms():
         t.Lambda(lambda x: x.numpy()*255.)
     ])
     return tf
+
+
+def eval_centroids_medoids(features, compute_class_representatives):
+    if compute_class_representatives == 'm':
+        distances = pdist(features, metric='euclidean')
+        distances = squareform(distances)
+        c_idx = distances.sum(axis=1).argmin()
+        c = features[c_idx]
+    else:
+        c = np.mean(features, axis=0)
+    return c
