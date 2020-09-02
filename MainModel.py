@@ -164,7 +164,7 @@ class KitModel(nn.Module):
         self.conv5_3_1x1_up = self.__conv(2, name='conv5_3_1x1_up', in_channels=128, out_channels=2048, kernel_size=(1, 1), stride=(1, 1), groups=1, bias=True)
         self.classifier_1 = self.__dense(name = 'classifier_1', in_features = 2048, out_features = 8631, bias = True)
 
-    def forward(self, x):
+    def forward(self, x, classify=False):
         conv1_7x7_s2_pad = F.pad(x, (3, 3, 3, 3))
         conv1_7x7_s2    = self.conv1_7x7_s2(conv1_7x7_s2_pad)
         conv1_7x7_s2_bn = self.conv1_7x7_s2_bn(conv1_7x7_s2)
@@ -454,10 +454,12 @@ class KitModel(nn.Module):
         pool5_7x7_s1    = F.avg_pool2d(conv5_3_relu, kernel_size=(7, 7), stride=(1, 1), padding=(0,), ceil_mode=False)
         classifier_0    = pool5_7x7_s1.view(pool5_7x7_s1.size(0), -1)
         classifier_1    = self.classifier_1(classifier_0)
-        names = "conv2_3, conv2_3_relu, conv3_3, conv3_3_relu, conv4_2, conv4_2_relu, conv4_5, conv4_5_relu, conv5_2, conv5_2_relu, features, logits"
-        layers = [conv2_3, conv2_3_relu, conv3_3, conv3_3_relu, conv4_2, conv4_2_relu, conv4_5, conv4_5_relu, conv5_2, conv5_2_relu, classifier_0, classifier_1]
-        return dict(zip(map(str.strip, names.split(',')), layers))
-        # return classifier_1, classifier_0
+        if classify:
+            return classifier_1, classifier_0
+        else:
+            names = "conv2_3, conv2_3_relu, conv3_3, conv3_3_relu, conv4_2, conv4_2_relu, conv4_5, conv4_5_relu, conv5_2, conv5_2_relu, features, logits"
+            layers = [conv2_3, conv2_3_relu, conv3_3, conv3_3_relu, conv4_2, conv4_2_relu, conv4_5, conv4_5_relu, conv5_2, conv5_2_relu, classifier_0, classifier_1]
+            return dict(zip(map(str.strip, names.split(',')), layers))
 
     @staticmethod
     def __batch_normalization(dim, name, **kwargs):
