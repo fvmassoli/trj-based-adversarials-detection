@@ -92,6 +92,58 @@ class CustomDataset(Dataset):
         return len(self._samples)
 
 
+class CustomDatasetFromCsv(Dataset):
+    def __init__(self, root, csv_root, transform=None, return_path=False):
+        self._root = root
+        self._csv_root = csv_root
+        self._transform = transform
+        self._return_path = return_path
+        self._classes, self._class_to_idx = self._find_classes()
+        self._cw2_imgs_paths = self._get_imgs_paths('cw2_imgs_path.csv')
+        self._bim_imgs_paths = self._get_imgs_paths('bim_imgs_path.csv')
+        self._mi_fgsm_imgs_paths = self._get_imgs_paths('mi_fgsm_imgs_path.csv')
+        self._imgs_list = self._get_full_imgs_list()
+        self._loader = self._get_loader
+
+    def _get_imgs_paths(self, csv_path):
+        df = pd.read_csv(os.path.join(self._csv_root, csv_path))
+        return df['path'].tolist()
+
+    def _get_full_imgs_list(self):
+        imgs_list = self._cw2_imgs_paths
+        imgs_list.extend(self._bim_imgs_paths)
+        imgs_list.extend(self._mi_fgsm_imgs_paths)
+        imgs_list.sort(key=lambda x: x.split('/')[-2])
+        return imgs_list
+
+    @staticmethod
+    def _get_loader(path):
+        return Image.fromarray(cv2.imread(path))
+
+    def _find_classes(self):
+        if sys.version_info >= (3, 5):
+            classes = [d.name for d in os.scandir(self._root) if d.is_dir()]
+        else:
+            classes = [d for d in os.listdir(self._root) if os.path.isdir(os.path.join(self._root, d))]
+        classes.sort()
+        class_to_idx = {classes[i]: i for i in range(len(classes))}
+        return classes, class_to_idx
+
+    def __getitem__(self, index):
+        path = self._imgs_list[index]
+        target = self._class_to_idx[path.split('/')[-2]]
+        image = self._loader(path)
+        if self._transform is not None:
+            image = self._transform(image)
+        if self._return_path:
+            return image, target, path
+        else:
+            return image, target
+
+    def __len__(self):
+        return len(self._imgs_list)
+
+
 def load_model(base_model_path, model_checkpoint, device):
     model = torch.load(path, map_location=lambda storage, loc: storage, pickle_module=pickle)
     linear = nn.Linear(in_features=2048, out_features=500, bias=True)
