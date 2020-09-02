@@ -1,5 +1,4 @@
 import sys
-sys.path.append('/home/fabiovalerio/lavoro/adversarial_face_recognition/paper-revision')
 
 import os
 import argparse
@@ -23,7 +22,7 @@ from adversarials_detector.detector import Detector
 from adversarials_detector.embedder import precompute_embeddings
 
 
-MAIN_OUTPUT_PATH = '/media/fabiovalerio/adversarial_face_recognition_revision_outputs'
+MAIN_OUTPUT_PATH = './adversarial_face_recognition_outputs'
 
 
 def train(loader, detector, optimizer, device):
@@ -162,7 +161,7 @@ def main(args):
         
     [b.register_forward_hook(extract) for b in blocks]
 
-    root = '/media/fabiovalerio/adversarial_face_recognition_revision_outputs/adversarials'
+    root = os.path.join(MAIN_OUTPUT_PATH, 'adversarials')
     
     ## Precompute embeddings only once
     if args.test_detector:
@@ -276,7 +275,7 @@ if __name__ == '__main__':
             args.dataset_name = 'cifar10'
             args.model_checkpoint = '../toy_models/cifar10/model-wideres.pth'
 
-    b = os.path.join('/media/fabiovalerio/adversarial_face_recognition_revision_outputs', args.dataset_name, 'class_representatives')
+    b = os.path.join(MAIN_OUTPUT_PATH, args.dataset_name, 'class_representatives')
     args.class_representatives_path = os.path.join(b, 'centroids.hdf5') if args.class_representatives == 'c' else os.path.join(b, 'medoids.hdf5')
 
     global features_state

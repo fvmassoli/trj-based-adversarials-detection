@@ -38,7 +38,7 @@ def extract_features(args):
     registered_hooks = [b.register_forward_hook(hook_func) for b in blocks_idx] 
     
     train_classes = np.arange(10)
-    loader = get_loader_for_features_extraction('/media/fabiovalerio/datasets', args.dataset_name)
+    loader = get_loader_for_features_extraction(args.dataset_path, args.dataset_name)
 
     ## Remove old features files
     if len(os.listdir(args.features_path)) != 0:
@@ -112,13 +112,14 @@ def eval_class_representatives(args):
 
 if __name__ == '__main__':  
     parser = argparse.ArgumentParser('extr')
+    parser.add_argument('-dp', '--dataset-path')
     parser.add_argument('-cr', '--class-representatives', choices=('c', 'm'), default='c')
     parser.add_argument('-ma', '--model-arc', choices=('small', 'wide'), default='small')
     parser.add_argument('-ex', '--extract', action='store_true')
     parser.add_argument('-ev', '--eval-centr', action='store_true')
     args = parser.parse_args()
 
-    main_output_dir = '/media/fabiovalerio/adversarial_face_recognition_revision_outputs/'
+    main_output_dir = './adversarial_face_recognition_outputs/'
     if not os.path.exists(main_output_dir):
         os.makedirs(main_output_dir)
 

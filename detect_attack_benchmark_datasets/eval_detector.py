@@ -1,5 +1,4 @@
 import sys
-sys.path.append('/home/fabiovalerio/lavoro/adversarial_face_recognition/paper-revision')
 
 import os
 import argparse
@@ -20,8 +19,8 @@ from adversarials_detector.detector import Detector
 from adversarials_detector.embedder import precompute_embeddings
 
 
-MAIN_OUTPUT_PATH = '/media/fabiovalerio/adversarial_face_recognition_revision_outputs'
-MAIN_CKP_PATH = '/media/fabiovalerio/adversarial_face_recognition_revision_outputs'
+MAIN_OUTPUT_PATH = './adversarial_face_recognition_outputs'
+
 
 def evaluate(loader, attacks, detector, device):
     detector.eval()
@@ -139,11 +138,11 @@ def main(args):
         detector.to(device)
         detector.load_state_dict(torch.load(detector_checkpoint)['detector'])
 
-        b = os.path.join('/media/fabiovalerio/adversarial_face_recognition_revision_outputs', args.dataset_name, 'class_representatives')
+        b = os.path.join(MAIN_OUTPUT_PATH, args.dataset_name, 'class_representatives')
         args.class_representatives_path = os.path.join(b, 'centroids.hdf5') if class_representatives == 'c' else os.path.join(b, 'medoids.hdf5')
 
         ## Precompute embeddings only once
-        root = os.path.join('/media/fabiovalerio/adversarial_face_recognition_revision_outputs/adversarials', args.dataset_name)
+        root = os.path.join(MAIN_OUTPUT_PATH, 'adversarials', args.dataset_name)
         test_ds = OrigAdvDataset(root=root, split='test')
         test_cache = 'cache_test_{}_{}.pth'.format('cos' if args.distance == 'cosine' else 'euc',
                                                 'med' if class_representatives == 'm' else 'centr')

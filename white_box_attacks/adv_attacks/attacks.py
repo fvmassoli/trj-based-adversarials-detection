@@ -1,6 +1,4 @@
 import sys
-sys.path.append('/home/fabiovalerio/lavoro/adversarial_face_recognition/paper-revision/white_box_attacks_face')
-
 import numpy as np
 
 from adv_attacks.attack_cw2 import L2Adversary as cw2

@@ -20,7 +20,7 @@ from torchvision.datasets import MNIST
 from torchvision.transforms import ToTensor
 
 
-MAIN_OUTPUT = './white_box_attack_adversarials'#'/media/fabiovalerio/adversarial_face_recognition_revision_outputs/white_box_attack_adversarials'
+MAIN_OUTPUT = './'
 
 
 def get_threatened_model(args, device):
@@ -244,12 +244,13 @@ def main(args):
 
 
 if __name__ == '__main__':
-    
     parser = argparse.ArgumentParser(description='white box')
-
     parser.add_argument('-s', '--seed', type=int, default=13)
     parser.add_argument('-ds', '--dataset-name', choices=('mnist', 'vggface2'), default='mnist')
     parser.add_argument('-alm', '--all-mnist', action='store_true')
+    parser.add_argument('-dck', '--detector-ckp', help='Detector checkpoint')
+    parser.add_argument('-mck', '--model-ckp', help='Model checkpoint')
+    parser.add_argument('-cp', '--centroids-path', help='Path to class representatives')
     ## Attacks
     parser.add_argument('-atk', '--attack', choices=('cw2', 'deep'), default='deep')
     parser.add_argument('-t', '--targeted', action='store_true', help='Run targeted attacks (default: False)')
@@ -265,28 +266,12 @@ if __name__ == '__main__':
     args = parser.parse_args()
 
     if args.dataset_name == 'vggface2':
-        pivots_base = '/mnt/datone/adversarial_face_recognition_original/features_centroids/train-500-w-dropout/'
-        args.centroids_path = os.path.join(pivots_base, 'vggface2_medoids.h5')
-        
-        if args.targeted:
-            ## targeted
-            b = 'best_model_with_arch_lstm_method_m_dist_cosine_criterion_t_lr_0.0003_bs_32_ba_4_weightd_0.pth'
-        else:
-            ## untargeted
-            b = 'best_model_with_arch_lstm_method_m_dist_cosine_criterion_ut_lr_0.0005_bs_32_ba_4_weightd_0.pth'
-        base = '/mnt/datone/adversarial_face_recognition_original/detector_training/runs_output/ckpt/new_runs/'
-        args.detector_ckp = os.path.join(base, b)
-
-        args.model_ckp = '/mnt/datone/low_resolution_face_recognition_output/model_checkpoints/vggface2-500/train_2019_08_03-11.12.06--e-100--lp-0.5--curr-False--lr-0.01--m-0.9--l_-0.2--sv-50--dp-0.5--s-True/models_ckp_10.pth'
         args.hidden = 100
         args.bidir = True
         args.architecture = args.detector_ckp.split('/')[-1].split('_')[4]
         args.distance = args.detector_ckp.split('/')[-1].split('_')[8]
     
     else:
-        args.model_ckp = '../toy_models/mnist/model-smallcnn.pth'
-        args.detector_ckp = '/media/fabiovalerio/adversarial_face_recognition_revision_outputs/mnist/detector_ckp/detector_arch-lstm_dset-mnist_cr-m_dist-euclidean_lr-0.001_wd-2e-05_bs-128_bd-True.pth'
-        args.centroids_path = '/media/fabiovalerio/adversarial_face_recognition_revision_outputs/mnist/class_representatives/medoids.hdf5'
         args.hidden = 100
         args.bidir = True
         args.architecture = 'lstm'

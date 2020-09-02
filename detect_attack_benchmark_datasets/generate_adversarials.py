@@ -72,12 +72,11 @@ def get_out_main_path(attack_name, criterion, args):
 
 
 def main(args):
-    base_output = '/media/fabiovalerio/adversarial_face_recognition_revision_outputs/adversarials/'
-    datasets_base_path = '/media/fabiovalerio/datasets'
-
+    base_output = './adversarial_face_recognition_outputs/adversarials/'
+    
     model = load_model(args.model_arc, args.model_checkpoint)
 
-    loader = get_loader_for_adversarials_generation(datasets_base_path, args.dataset_name)
+    loader = get_loader_for_adversarials_generation(args.datasets_base_path, args.dataset_name)
     batch_size = loader.batch_size
 
     save_nat_images = True
@@ -166,7 +165,7 @@ def main(args):
             
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='Adversarial Attacks')
-
+    parser.add_argument('-dp', '--datasets-base-path')
     parser.add_argument('-an', '--attack-name',  choices=('pgd', 'mi-fgsm', 'bim2', 'cw2'), default='pgd', help='Attack name (default: pgd)')
     parser.add_argument('-cr', '--criterion', choices=('t', 'ut'), default='ut', help='Attack criterion (default: ut')
     parser.add_argument('-e', '--epsilon',  type=float, default=0.3, help='maximum perturbation allowed')
