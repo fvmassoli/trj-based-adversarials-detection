@@ -12,7 +12,11 @@ Moreover, we showed that our technique can also be used to detect adversrial att
 Proposed detection approach
 
 <p align="center">
-<img src=""  alt="" width="600" height="300">
+<img src="https://github.com/fvmassoli/trj-based-adversarials-detection/blob/master/images/img1.png"  alt="Detection technique">
+</p>
+
+<p align="center">
+<img src="https://github.com/fvmassoli/trj-based-adversarials-detection/blob/master/images/img2.png"  alt="" width="500" height="300">
 </p>
 
 
