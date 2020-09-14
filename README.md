@@ -1,4 +1,22 @@
-# Code Usage
+# Detection of Face Recognition Adversarial Attacks
+
+This repository contains the code relative to the paper "[Detection of Face Recognition Adversarial Attacks](https://www.sciencedirect.com/science/article/pii/S1077314220301296)" by Fabio Valerio Massoli (ISTI - CNR), Fabio Carrara (ISTI - CNR), Giuseppe Amato (ISTI - CNR), and Fabrizio Falchi (ISTI - CNR).
+
+It reports a new technique to detect adversarial attacks against a face recognition system. 
+
+Moreover, we showed that our technique can also be used to detect adversrial attacks in more generic settings.
+
+
+## Adversarial Detection 
+
+Proposed detection approach
+
+<p align="center">
+<img src=""  alt="" width="600" height="300">
+</p>
+
+
+## How to run the code
 
 
 ### Train and test the detector on the VGGFace2 dataset.
@@ -42,3 +60,28 @@
 1. White box attacks with the MNIST dataset
 
         python3 white_box_attacks.py -atk cw2 -ds mnist
+
+
+## Reference
+For all the details about the detection technique and the experimental results, please have a look at the [paper](https://www.sciencedirect.com/science/article/pii/S1077314220301296).
+
+To cite our work, please use the following form
+
+```
+@article{massoli2020detection,
+  title={Detection of Face Recognition adversarial attacks},
+  author={Massoli, Fabio Valerio and Carrara, Fabio and Amato, Giuseppe and Falchi, Fabrizio},
+  journal={Computer Vision and Image Understanding},
+  pages={103103},
+  year={2020},
+  publisher={Elsevier}
+}
+```
+
+## Contacts & Model Request
+If you have any question about our work, please contact [Dr. Fabio Valerio Massoli](mailto:fabio.massoli@isti.cnr.it). 
+
+We make our detector best model available to researchers upon request to: [Dr. Fabio Valerio Massoli](mailto:fabio.massoli@isti.cnr.it).
+
+
+Have fun! :-D
