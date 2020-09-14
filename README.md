@@ -16,7 +16,7 @@ Proposed detection approach
 </p>
 
 
-# Code Usage
+## How to run the code
 
 
 ### Train and test the detector on the VGGFace2 dataset.
