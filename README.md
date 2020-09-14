@@ -25,16 +25,9 @@ Comparison of the distances, from class centroids, of adversarial attacks genera
 
 ## How to run the code
 
-
-### Train and test the detector on the VGGFace2 dataset.
-
-### Run the following commands inside the ```face_attacks``` folder
-
-
-
 ### Train and test the detector on MNIST and CIFAR-10 datasets.
 
-### Run the following commands inside the ```detect_attack_benchmark_datasets``` folder
+#### Run the following commands inside the ```detect_attack_benchmark_datasets``` folder
 
 1. Features extraction and class representatives evaluation
 
@@ -58,7 +51,7 @@ Comparison of the distances, from class centroids, of adversarial attacks genera
 
 ### White box attacks on MNIST and VGGFace2
 
-### Run the following commands inside the ```white_box_attacks``` folder
+#### Run the following commands inside the ```white_box_attacks``` folder
 
 1. White box attacks with the vggface2 dataset
 
