@@ -22,6 +22,25 @@ Comparison of the distances, from class centroids, of adversarial attacks genera
 <img src="https://github.com/fvmassoli/trj-based-adversarials-detection/blob/master/images/img2.png"  alt="" width="500" height="350">
 </p>
 
+## Model checkpoints
+
+The checkpoints are relative to models reported in **Table 1** of the paper
+
+| Configuration (Targeted attacks) | BIM | CW | MI-FGSM | Macro-AUC |
+| --- | --- | --- | --- | --- |
+| [LSTM + M + L_2](https://drive.google.com/file/d/1T-k6sTbcwDQV5GhV9UpQ5KhKMuTqbJr-/view?usp=sharing) | 0.977 | 0.871 | 0.986 | 0.944 |
+| [LSTM + C + L_2](https://drive.google.com/file/d/1dggQ7G2kYw0D8P7qE_IUJHStP2sEKYHZ/view?usp=sharing) | 0.970 | 0.857 | 0.982 | 0.936 |
+| [LSTM + M + cos](https://drive.google.com/file/d/1AjGGi9cePIfjwZ2xNiCaQqmzNAUqWVuy/view?usp=sharing) | 0.986 | 0.904 | 0.991 | 0.960 |
+| [LSTM + C + cos](https://drive.google.com/file/d/1KFZHKGfCp_QNc9nCRms97E-Kzc3Nxxgh/view?usp=sharing) | 0.968 | 0.895 | 0.981 | 0.948 |
+
+| Configuration (Unargeted attacks) | BIM | CW | MI-FGSM | Macro-AUC | 
+| --- | --- | --- | --- | --- |
+| [LSTM + M + L_2](https://drive.google.com/file/d/1J0_U-jf_HkyDDtBja53G1UlbSANH6Ecg/view?usp=sharing) | 0.878 | 0.615 | 0.889 | 0.794 |
+| [LSTM + C + L_2](https://drive.google.com/file/d/1s5LKjIzfwdlS5Aa0ayuHexw4nGwQlC_Q/view?usp=sharing) | 0.863 | 0.596 | 0.869 | 0.776 |
+| [LSTM + M + cos](https://drive.google.com/file/d/1eRgWg6ePD_-dUQNk3aFct4NSGuWEgJzg/view?usp=sharing) | 0.929 | 0.599 | 0.930 | 0.819 |
+| [LSTM + C + cos](https://drive.google.com/file/d/1HrRvNg5-SoxJ-K7FKs5yOpk6L6kq_yFI/view?usp=sharing) | 0.884 | 0.568 | 0.886 | 0.779 |
+
+
 
 ## How to run the code
 
